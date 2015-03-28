@@ -5,9 +5,12 @@
 SwipeSlider::SwipeSlider(Qt::Orientation orientation, QString text, QWidget *parent)
    : QWidget(parent),
      value_(0.0),
+     set_(false),
      minimum_(0.0),
      maximum_(1.0),
      enabled(false),
+     aspect_(7.0),
+     minsize_(100),
      orientation_(orientation),
      text_(text),
      outline_(0),
@@ -78,16 +81,17 @@ void SwipeSlider::setValue(double value)
 
 void SwipeSlider::setNormalizedValue(double value)
 {
-   if (value == value_) return;
+   if (value == value_ && set_) return;
 
    value_ = value;
+   set_ = true;
 
    if (value_ < 0.0) value_ = 0.0;
    else if (value_ > 1.0) value_ = 1.0;
 
-   emit valueChanged(getValue());
-
    repaint();
+
+   emit valueChanged(getValue());
 }
 
 void SwipeSlider::scrollSlider(double offset)

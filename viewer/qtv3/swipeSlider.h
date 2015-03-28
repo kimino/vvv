@@ -47,17 +47,16 @@ public:
    QSize minimumSizeHint() const
    {
       if (orientation_ == Qt::Vertical)
-         return(QSize(100, heightForWidth(100)));
+         return(QSize(minsize_, heightForWidth(minsize_)));
       else
-         return(QSize(widthForHeight(100), 100));
+         return(QSize(widthForHeight(minsize_), minsize_));
    }
 
    //! return height for given width
    int heightForWidth(int x) const
    {
-      int aspect = 7;
-      int y = x/aspect;
-      int miny = 100/aspect;
+      int y = x/aspect_;
+      int miny = minsize_/aspect_;
       if (y<miny) y = miny;
       return(y);
    }
@@ -65,22 +64,32 @@ public:
    //! return width for given height
    int widthForHeight(int y) const
    {
-      int aspect = 7;
-      int x = y/aspect;
-      int minx = 100/aspect;
+      int x = y/aspect_;
+      int minx = minsize_/aspect_;
       if (x<minx) x = minx;
       return(x);
+   }
+
+   //! configure aspect ratio of slider
+   void setAspect(double aspect, double minsize = 100)
+   {
+      aspect_ = aspect;
+      minsize_ = minsize;
    }
 
 protected:
 
    double value_;
+   bool set_;
 
    double minimum_;
    double maximum_;
 
    SwipeFilter *filter;
    bool enabled;
+
+   double aspect_;
+   int minsize_;
 
    Qt::Orientation orientation_;
    QString text_;
