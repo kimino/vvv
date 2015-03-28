@@ -78,10 +78,14 @@ void SwipeSlider::setValue(double value)
 
 void SwipeSlider::setNormalizedValue(double value)
 {
+   if (value == value_) return;
+
    value_ = value;
 
    if (value_ < 0.0) value_ = 0.0;
    else if (value_ > 1.0) value_ = 1.0;
+
+   emit valueChanged(getValue());
 
    repaint();
 }
@@ -90,8 +94,6 @@ void SwipeSlider::scrollSlider(double offset)
 {
    double size = (orientation_ == Qt::Horizontal)? width() : height();
    setNormalizedValue(getNormalizedValue() + offset/size);
-
-   emit valueChanged(getValue());
 }
 
 void SwipeSlider::move(SwipeDirection direction, int offset)

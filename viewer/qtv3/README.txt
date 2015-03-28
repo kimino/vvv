@@ -1,5 +1,5 @@
 ! The QTV3 - Volume Rendering with Qt
-Copyright (c) 2013-2014 by Stefan Roettger.
+Copyright (c) 2013-2015 by Stefan Roettger.
 
 The QTV3 is a Qt application that displays volume data like CT or MRI
 scans. It is free software licensed under the GPL.
